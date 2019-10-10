@@ -1,10 +1,8 @@
 package cz.jalasoft.psaninastroji.application;
 
-import cz.jalasoft.psaninastroji.domain.model.EvaluationResult;
-import cz.jalasoft.psaninastroji.domain.model.EvaluationService;
-import cz.jalasoft.psaninastroji.domain.model.InputText;
-import cz.jalasoft.psaninastroji.domain.model.excercise.Excercise;
-import cz.jalasoft.psaninastroji.domain.model.excercise.ExcerciseRepository;
+import cz.jalasoft.psaninastroji.domain.model.lesson.Lesson;
+import cz.jalasoft.psaninastroji.domain.model.lesson.LessonRepository;
+import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.Exercise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,22 +13,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationService {
 
-    private final ExcerciseRepository repository;
+    private final LessonRepository repository;
     private final EvaluationService evaluationService;
 
     @Autowired
-    public ApplicationService(ExcerciseRepository repository, EvaluationService evaluationService) {
+    public ApplicationService(LessonRepository repository, EvaluationService evaluationService) {
         this.repository = repository;
         this.evaluationService = evaluationService;
     }
 
-    public Excercise excerciseByNumber(int number) {
+    public Lesson lessonByNumber(int number) {
         return repository.byNumber(number);
     }
 
-    public EvaluationResult validate(int number, InputText input) {
-        Excercise excercise = repository.byNumber(number);
-        EvaluationResult result = evaluationService.evaluate(excercise.pattern(), input);
-        return result;
+    public Exercise newExercise(int number) {
+        Lesson lesson = repository.byNumber(number);
+        Exercise exercise = lesson.newExercise();
+        return exercise;
     }
 }

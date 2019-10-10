@@ -1,4 +1,4 @@
-package cz.jalasoft.psaninastroji.domain.model.excercise;
+package cz.jalasoft.psaninastroji.domain.model.lesson;
 
 /**
  * @author Jan Lastovicka

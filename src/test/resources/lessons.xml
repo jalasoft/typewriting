@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<lessons>
+    <lesson number="1">
+        <instructions>Opište bez mezer na jednu řádku</instructions>
+        <text>k a l a d a s l a d k a j d a l k s a l a j a d a s a s a k s a j</text>
+        <validation type="incremental_typos">
+            <typo equals="0" exercise="3"/>
+            <typo equals="1" exercise="2"/>
+            <typo equals="2" exercise="1"/>
+            <typo greaterThan="2" exercise="1"/>
+        </validation>
+    </lesson>
+    <lesson number="2">
+        <instructions>Opište bez mezer na jednu řádku.</instructions>
+        <text>a k l a k s k a j a k a k d a l k a s a l k d a l k s d a l s</text>
+        <validation type="incremental_typos">
+            <typo equals="0" exercise="3"/>
+            <typo equals="1" exercise="3"/>
+            <typo equals="2" exercise="2"/>
+            <typo equals="3" exercise="1"/>
+            <typo greaterThan="3" exercise="1"/>
+        </validation>
+    </lesson>
+    <lesson number="3">
+        <instructions>Opiště bez kontroli času. Mezerník tiskneme palcem.</instructions>
+        <text>da sad dal skla klas kasa salda sklad kajak klak saka lasa</text>
+        <validation type="incremental_typos">
+            <typo equals="0" exercise="5"/>
+            <typo equals="1" exercise="4"/>
+            <typo equals="2" exercise="3"/>
+            <typo equals="3" exercise="2"/>
+            <typo equals="4" exercise="1"/>
+            <typo greaterThan="4" exercise="1"/>
+        </validation>
+    </lesson>
+</lessons>
