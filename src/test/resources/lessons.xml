@@ -23,7 +23,7 @@
     </lesson>
     <lesson number="3">
         <instructions>Opiště bez kontroli času. Mezerník tiskneme palcem.</instructions>
-        <text>da sad dal skla klas kasa salda sklad kajak klak saka lasa</text>
+        <text>da sad dal skla klas kasa salda sklad kaja klak saka lasa</text>
         <validation type="incremental_typos">
             <typo equals="0" exercise="5"/>
             <typo equals="1" exercise="4"/>
