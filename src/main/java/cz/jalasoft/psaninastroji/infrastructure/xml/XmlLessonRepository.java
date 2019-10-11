@@ -1,9 +1,6 @@
 package cz.jalasoft.psaninastroji.infrastructure.xml;
 
-import cz.jalasoft.psaninastroji.domain.model.lesson.Instructions;
-import cz.jalasoft.psaninastroji.domain.model.lesson.Lesson;
-import cz.jalasoft.psaninastroji.domain.model.lesson.LessonRepository;
-import cz.jalasoft.psaninastroji.domain.model.lesson.Pattern;
+import cz.jalasoft.psaninastroji.domain.model.lesson.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -64,6 +61,7 @@ public final class XmlLessonRepository implements LessonRepository {
         private static final String INSTRUCTIONS_ELEMENT = "instructions";
         private static final String TEXT_ELEMENT = "text";
         private static final String VALIDATION_ELEMENT = "validation";
+        private static final String TYPO_ELEMENT = "typo";
 
         private final FluxSink<Lesson> sink;
 
@@ -72,6 +70,8 @@ public final class XmlLessonRepository implements LessonRepository {
         private String instructions;
         private boolean textElement;
         private String text;
+
+        private TyposDrivingMovementValidationRule.Builder builder;
 
         public LessonsHandler(FluxSink<Lesson> sink) {
             this.sink = sink;
@@ -91,26 +91,54 @@ public final class XmlLessonRepository implements LessonRepository {
                 case TEXT_ELEMENT:
                     textElement = true;
                     break;
+
+                case VALIDATION_ELEMENT:
+                    String type = attributes.getValue("type");
+
+                    switch (type) {
+                        case "typos_driving":
+                            builder = TyposDrivingMovementValidationRule.newRule();
+                            break;
+
+                        default:
+                            throw new IllegalStateException("Unknown validation type: " + type);
+                    }
+                    break;
+
+                case TYPO_ELEMENT:
+                    if (builder == null) {
+                        throw new IllegalStateException();
+                    }
+
+                    int lesson = Integer.parseInt(attributes.getValue("lesson"));
+                    LessonNumber lessonNumber = new LessonNumber(lesson);
+
+                    String equalsStr = attributes.getValue("equals");
+                    if (equalsStr != null) {
+                        int equals = Integer.parseInt(equalsStr);
+                        builder.typosEqualTo(equals, lessonNumber);
+                    }
             }
         }
 
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
         	if (instructionsElement) {
-        	    instructions = new String(ch);
+        	    instructions = new String(ch, start, length);
             }
 
         	if (textElement) {
-        	    text = new String(ch);
+        	    text = new String(ch, start, length);
             }
         }
 
         @Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
-            switch (localName) {
+            switch (qName) {
                 case LESSON_ELEMENT:
                     buildLesson();
                     lessonNumber = null;
+                    builder = null;
 
                 case INSTRUCTIONS_ELEMENT:
                     instructionsElement = false;
@@ -123,7 +151,9 @@ public final class XmlLessonRepository implements LessonRepository {
         private void buildLesson() {
             Instructions instructions = new Instructions(this.instructions);
             Pattern pattern = new Pattern(this.text);
-            Lesson lesson = new Lesson(lessonNumber, instructions, pattern, null);
+            ValidationRule validationRule = builder.get();
+
+            Lesson lesson = new Lesson(lessonNumber, instructions, pattern, validationRule);
 
             sink.next(lesson);
         }
