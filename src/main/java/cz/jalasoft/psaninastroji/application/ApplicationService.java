@@ -5,6 +5,7 @@ import cz.jalasoft.psaninastroji.domain.model.lesson.LessonRepository;
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.Exercise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Jan Lastovicka
@@ -14,21 +15,18 @@ import org.springframework.stereotype.Component;
 public class ApplicationService {
 
     private final LessonRepository repository;
-    private final EvaluationService evaluationService;
 
     @Autowired
-    public ApplicationService(LessonRepository repository, EvaluationService evaluationService) {
+    public ApplicationService(LessonRepository repository) {
         this.repository = repository;
-        this.evaluationService = evaluationService;
     }
 
-    public Lesson lessonByNumber(int number) {
+    public Mono<Lesson> lessonByNumber(int number) {
         return repository.byNumber(number);
     }
 
-    public Exercise newExercise(int number) {
-        Lesson lesson = repository.byNumber(number);
-        Exercise exercise = lesson.newExercise();
-        return exercise;
+    public Mono<Exercise> newExercise(int number) {
+        Mono<Exercise> exerciseMono = repository.byNumber(number).map(Lesson::newExercise);
+        return exerciseMono;
     }
 }

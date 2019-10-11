@@ -7,7 +7,7 @@ module psani.na.stroji {
     requires spring.core;
     requires java.sql;
     requires spring.web;
-    requires xstream;
+    requires reactor.core;
 
     opens cz.jalasoft.psaninastroji to spring.core;
 

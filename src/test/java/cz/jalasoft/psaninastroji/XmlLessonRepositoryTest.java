@@ -7,6 +7,13 @@ import cz.jalasoft.psaninastroji.infrastructure.xml.XmlLessonRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import reactor.core.publisher.Mono;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Jan Lastovicka
@@ -15,16 +22,25 @@ import org.junit.jupiter.api.TestInstance;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class XmlLessonRepositoryTest {
 
+    private static final String LESSONS_XML = "lessons.xml";
+
     private LessonRepository repository;
 
     @BeforeAll
-    public void init() {
-        repository = new XmlLessonRepository();
+    public void init() throws URISyntaxException {
+        URI fileUri = getClass().getClassLoader().getResource(LESSONS_XML).toURI();
+        Path lessonsFile = Paths.get(fileUri);
+
+        repository = new XmlLessonRepository(lessonsFile);
     }
 
     @Test
     public void firstTestIsObtained() {
-        Lesson lesson = repository.byNumber(1);
+        Mono<Lesson> lessonMono = repository.byNumber(1);
+
+        Lesson lesson = lessonMono.block();
+
+        System.out.println();
 
     }
 }

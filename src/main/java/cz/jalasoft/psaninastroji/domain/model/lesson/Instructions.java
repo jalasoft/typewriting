@@ -8,5 +8,7 @@ public final class Instructions {
 
     private String text;
 
-
+    public Instructions(String text) {
+        this.text = text;
+    }
 }
