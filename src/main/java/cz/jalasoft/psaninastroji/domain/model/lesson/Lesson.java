@@ -33,6 +33,6 @@ public final class Lesson {
     }
 
     public Exercise newExercise() {
-        throw new UnsupportedOperationException();
+        return new Exercise(this);
     }
 }

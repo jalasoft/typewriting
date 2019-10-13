@@ -19,6 +19,13 @@ public final class Pattern {
         return value.length();
     }
 
+    public char at(int index) {
+        if (index < 0 || value.length() <= index) {
+            throw new IllegalArgumentException("Index must be in [" + 0 + ", " + (length() - 1) + "]");
+        }
+        return this.value.charAt(index);
+    }
+
     @Override
     public String toString() {
         return "Pattern[length=" + length() + "]";
