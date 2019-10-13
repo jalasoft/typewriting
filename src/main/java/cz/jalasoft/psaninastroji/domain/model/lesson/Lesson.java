@@ -32,6 +32,10 @@ public final class Lesson {
         return pattern;
     }
 
+    public ValidationRule validationRule() {
+        return validationRule;
+    }
+
     public Exercise newExercise() {
         return new Exercise(this);
     }

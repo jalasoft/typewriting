@@ -15,6 +15,10 @@ public final class Pattern {
         this.value = value;
     }
 
+    public String value() {
+        return value;
+    }
+
     public int length() {
         return value.length();
     }

@@ -1,8 +1,8 @@
 package cz.jalasoft.psaninastroji;
 
 import cz.jalasoft.psaninastroji.domain.model.lesson.Lesson;
-import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.Exercise;
 import cz.jalasoft.psaninastroji.domain.model.lesson.LessonRepository;
+import cz.jalasoft.psaninastroji.domain.model.lesson.TyposDrivingMovementValidationRule;
 import cz.jalasoft.psaninastroji.infrastructure.xml.XmlLessonRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,9 +11,10 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Jan Lastovicka
@@ -40,7 +41,10 @@ public class XmlLessonRepositoryTest {
 
         Lesson lesson = lessonMono.block();
 
-        System.out.println();
+        assertNotNull(lesson);
+        assertEquals(lesson.number(), 1);
+        assertEquals(lesson.pattern().value(), "k a l a d a s l a d k a j d a l k s a l a j a d a s a s a k s a j");
+        assertTrue(lesson.validationRule() instanceof TyposDrivingMovementValidationRule);
 
     }
 }
