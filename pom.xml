@@ -13,6 +13,7 @@
         <maven.compiler.source>11</maven.compiler.source>
     </properties>
 
+    <!--
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -23,19 +24,26 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>
+    </dependencyManagement>-->
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.1.9.RELEASE</version>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>2.1.1.RELEASE</version>
         </dependency>
 
+        <!--<dependency>
+            <groupId>org.projectreactor</groupId>
+            <artifactId>reactor-spring</artifactId>
+            <version>1.0.1.RELEASE</version>
+        </dependency>-->
+
+        <!--
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -11,4 +11,8 @@ public final class Instructions {
     public Instructions(String text) {
         this.text = text;
     }
+
+    public String text() {
+        return text;
+    }
 }
