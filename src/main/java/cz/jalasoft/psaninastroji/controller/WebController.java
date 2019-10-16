@@ -1,5 +1,6 @@
 package cz.jalasoft.psaninastroji.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jan Lastovicka
  * @since 05/10/2019
  */
-@RestController
-public class ExcerciseController {
+@Controller
+public class WebController {
 
-    @GetMapping("/hello")
+    @GetMapping("/index.html")
     public String hello() {
-        return "Cus";
+        return "index";
     }
 }
