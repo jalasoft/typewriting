@@ -2,7 +2,6 @@ package cz.jalasoft.psaninastroji.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Jan Lastovicka
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class WebController {
 
-    @GetMapping("/index.html")
+    @GetMapping("/static/index.html")
     public String hello() {
         return "index";
     }
