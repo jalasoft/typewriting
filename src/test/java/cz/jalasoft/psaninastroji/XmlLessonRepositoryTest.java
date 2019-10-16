@@ -9,10 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,11 +26,9 @@ public class XmlLessonRepositoryTest {
     private LessonRepository repository;
 
     @BeforeAll
-    public void init() throws URISyntaxException {
-        URI fileUri = getClass().getClassLoader().getResource(LESSONS_XML).toURI();
-        Path lessonsFile = Paths.get(fileUri);
-
-        repository = new XmlLessonRepository(lessonsFile);
+    public void init() {
+        Supplier<InputStream> dataSupplier = () -> getClass().getClassLoader().getResourceAsStream(LESSONS_XML);
+        repository = new XmlLessonRepository(dataSupplier);
     }
 
     @Test

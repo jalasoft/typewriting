@@ -13,8 +13,13 @@ module psani.na.stroji {
     requires jackson.annotations;
 
     opens cz.jalasoft.psaninastroji to spring.core;
-    opens cz.jalasoft.psaninastroji.config to spring.core;
+    opens cz.jalasoft.psaninastroji.config to spring.core, spring.beans, spring.context;
+
 
     exports cz.jalasoft.psaninastroji to spring.beans, spring.context;
     exports cz.jalasoft.psaninastroji.controller to spring.beans, spring.web;
+
+    exports cz.jalasoft.psaninastroji.application to spring.beans;
+
+    exports cz.jalasoft.psaninastroji.config to com.fasterxml.jackson.databind;
 }

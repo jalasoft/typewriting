@@ -1,6 +1,12 @@
 package cz.jalasoft.psaninastroji.infrastructure.xml;
 
-import cz.jalasoft.psaninastroji.domain.model.lesson.*;
+import cz.jalasoft.psaninastroji.domain.model.lesson.Instructions;
+import cz.jalasoft.psaninastroji.domain.model.lesson.Lesson;
+import cz.jalasoft.psaninastroji.domain.model.lesson.LessonNumber;
+import cz.jalasoft.psaninastroji.domain.model.lesson.LessonRepository;
+import cz.jalasoft.psaninastroji.domain.model.lesson.Pattern;
+import cz.jalasoft.psaninastroji.domain.model.lesson.TyposDrivingMovementValidationRule;
+import cz.jalasoft.psaninastroji.domain.model.lesson.ValidationRule;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -12,7 +18,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.util.function.Supplier;
 
 /**
  * @author Jan Lastovicka
@@ -21,13 +28,13 @@ import java.nio.file.Path;
 public final class XmlLessonRepository implements LessonRepository {
 
     private final SAXParser parser;
-    private final Path file;
+    private final Supplier<InputStream> dataSupplier;
 
-    public XmlLessonRepository(Path file) {
+    public XmlLessonRepository(Supplier<InputStream> dataSupplier) {
         try {
             SAXParserFactory factory = SAXParserFactory.newDefaultInstance();
             this.parser = factory.newSAXParser();
-            this.file = file;
+            this.dataSupplier = dataSupplier;
         } catch (ParserConfigurationException | SAXException exc) {
             throw new RuntimeException(exc);
         }
@@ -40,8 +47,8 @@ public final class XmlLessonRepository implements LessonRepository {
         }
 
         Flux<Lesson> flux = Flux.create(sink -> {
-            try {
-                parser.parse(file.toFile(), new LessonsHandler(sink));
+            try (InputStream data = dataSupplier.get()) {
+                parser.parse(data, new LessonsHandler(sink));
                 sink.complete();
             } catch (SAXException | IOException exc) {
                 sink.error(exc);
