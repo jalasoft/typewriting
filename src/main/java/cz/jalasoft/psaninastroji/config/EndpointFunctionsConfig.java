@@ -36,6 +36,13 @@ public class EndpointFunctionsConfig {
     }
 
     @Bean
+    public RouterFunction<ServerResponse> lessonHtml(@Value("classpath:/static/lesson.html") Resource resource) {
+    	return route(GET("/lesson.html"), request -> {
+    		return ServerResponse.ok().contentType(MediaType.TEXT_HTML).syncBody(resource);
+		});
+	}
+
+    @Bean
     public RouterFunction<ServerResponse> staticResources() {
         return resources("/static/**", new ClassPathResource("/static/"));
     }
