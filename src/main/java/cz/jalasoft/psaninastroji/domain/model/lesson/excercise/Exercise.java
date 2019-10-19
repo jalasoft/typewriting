@@ -12,12 +12,14 @@ import java.util.List;
  */
 public final class Exercise {
 
+    private final ExerciseId id;
     private final Lesson lesson;
     private final List<Input> inputs;
 
     private int index;
 
-    public Exercise(Lesson lesson) {
+    public Exercise(ExerciseId id, Lesson lesson) {
+        this.id = id;
         this.lesson = lesson;
         this.inputs = new ArrayList<>();
         this.index = 0;

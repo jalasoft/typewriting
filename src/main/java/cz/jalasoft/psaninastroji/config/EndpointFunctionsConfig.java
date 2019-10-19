@@ -1,6 +1,7 @@
 package cz.jalasoft.psaninastroji.config;
 
 import cz.jalasoft.psaninastroji.application.ApplicationService;
+import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,14 +10,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import org.springframework.web.reactive.result.method.annotation.ServerWebExchangeArgumentResolver;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.*;
-import static org.springframework.web.reactive.function.server.RouterFunctions.*;
+import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RouterFunctions.resources;
+import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 /**
  * @author Jan Lastovicka
@@ -48,7 +48,16 @@ public class EndpointFunctionsConfig {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> getLessonByNumberRouter() {
+    public RouterFunction<ServerResponse> newExerciseByLessonNumber() {
+        return route(POST("/lesson/{number}"), request -> {
+            int lessonNumber = Integer.parseInt(request.pathVariable("number"));
+            Mono<ExerciseId> exerciseMono = applicationService.newExercise(lessonNumber);
+            return ServerResponse.ok().body(exerciseMono.map(ExerciseId::value), String.class);
+        });
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> getLessonByNumber() {
         return route(GET("/lesson/{number}"), request -> {
             int number = Integer.parseInt(request.pathVariable("number"));
             Mono<LessonResource> lessonMono = applicationService.lessonByNumber(number).map(LessonResource::new);

@@ -2,7 +2,10 @@ package cz.jalasoft.psaninastroji;
 
 import cz.jalasoft.psaninastroji.domain.model.lesson.*;
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.Exercise;
+import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseId;
+import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseRepository;
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseResult;
+import cz.jalasoft.psaninastroji.infrastructure.memory.InMemoryExerciseRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LessonExerciseTest {
 
     private Lesson lesson;
+    private ExerciseRepository exerciseRepository;
 
     @BeforeAll
     public void init() {
@@ -29,12 +33,15 @@ public class LessonExerciseTest {
                         .typosGreaterThan(0, new LessonNumber(23))
                         .get()
         );
+
+        exerciseRepository = new InMemoryExerciseRepository();
     }
 
     @Test
     public void exerciseWithoutTypoIsSignaledCorrectly() {
 
-        Exercise exercise = lesson.newExercise();
+        ExerciseId id = exerciseRepository.nextId();
+        Exercise exercise = lesson.newExercise(id);
         exercise.acceptKey('a');
         exercise.acceptKey('s');
         exercise.acceptKey('d');
@@ -50,8 +57,8 @@ public class LessonExerciseTest {
 
     @Test
     public void exerciseWithOneTypoIsSignaledCorrectly() {
-
-        Exercise exercise = lesson.newExercise();
+        ExerciseId id = exerciseRepository.nextId();
+        Exercise exercise = lesson.newExercise(id);
         exercise.acceptKey('a');
         exercise.acceptKey('s');
         exercise.acceptKey('d');

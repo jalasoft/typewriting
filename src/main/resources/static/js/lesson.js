@@ -1,16 +1,15 @@
 window.addEventListener("DOMContentLoaded", async function() {
 
 
-    const lesson_number = localStorage.getItem("lesson_number");
+    const exercise_id = localStorage.getItem("exercise_id");
 
-    if (!lesson_number) {
+    if (!exercise_id) {
         window.location.href = "/index.html";
         return;
     }
 
 
-    const response = await fetch("/lesson/" + lesson_number);
-
-    console.log(response);
+    //const response = await fetch("/lesson/" + lesson_number);
+    //console.log(response);
 
 });

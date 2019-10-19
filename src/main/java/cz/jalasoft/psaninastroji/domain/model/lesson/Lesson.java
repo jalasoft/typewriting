@@ -1,6 +1,7 @@
 package cz.jalasoft.psaninastroji.domain.model.lesson;
 
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.Exercise;
+import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseId;
 
 /**
  * @author Jan Lastovicka
@@ -36,7 +37,7 @@ public final class Lesson {
         return validationRule;
     }
 
-    public Exercise newExercise() {
-        return new Exercise(this);
+    public Exercise newExercise(ExerciseId id) {
+        return new Exercise(id, this);
     }
 }
