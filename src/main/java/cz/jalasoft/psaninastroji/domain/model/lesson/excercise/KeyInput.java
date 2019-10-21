@@ -6,16 +6,14 @@ import java.time.LocalTime;
  * @author Jan Lastovicka
  * @since 13/10/2019
  */
-public final class Input {
+public final class KeyInput {
 
     private final char key;
     private final LocalTime time;
-    private final boolean isTypo;
 
-    Input(char key, boolean isTypo) {
+    KeyInput(char key) {
         this.key = key;
         this.time = LocalTime.now();
-        this.isTypo = isTypo;
     }
 
     public char key() {
@@ -24,9 +22,5 @@ public final class Input {
 
     public LocalTime time() {
         return time;
-    }
-
-    public boolean isTypo() {
-        return isTypo;
     }
 }

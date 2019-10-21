@@ -9,19 +9,19 @@ import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseId;
  */
 public final class Lesson {
 
-    private final int number;
+    private final LessonNumber number;
     private final Instructions instructions;
     private final Pattern pattern;
     private final ValidationRule validationRule;
 
-    public Lesson(int number, Instructions instructions, Pattern pattern, ValidationRule validationRule) {
+    public Lesson(LessonNumber number, Instructions instructions, Pattern pattern, ValidationRule validationRule) {
         this.number = number;
         this.instructions = instructions;
         this.pattern = pattern;
         this.validationRule = validationRule;
     }
 
-    public int number() {
+    public LessonNumber number() {
         return number;
     }
 

@@ -11,6 +11,9 @@ module psani.na.stroji {
     requires reactor.core;
     requires reactor.netty;
     requires jackson.annotations;
+    requires r2dbc.spi;
+    requires r2dbc.h2;
+    requires org.reactivestreams;
 
     opens cz.jalasoft.psaninastroji to spring.core;
     opens cz.jalasoft.psaninastroji.config to spring.core, spring.beans, spring.context;

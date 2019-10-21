@@ -3,6 +3,7 @@ package cz.jalasoft.psaninastroji.infrastructure.memory;
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.Exercise;
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseId;
 import cz.jalasoft.psaninastroji.domain.model.lesson.excercise.ExerciseRepository;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,10 +27,16 @@ public final class InMemoryExerciseRepository implements ExerciseRepository {
     }
 
     @Override
-    public void safe(Exercise exercise) {
+    public Mono<Exercise> byId(ExerciseId id) {
+        return Mono.justOrEmpty(exercises.stream().filter(e -> e.id().equals(id)).findFirst());
+    }
+
+    @Override
+    public Mono<Void> safe(Exercise exercise) {
         if (exercise == null) {
             throw new IllegalArgumentException("Exercise must not be null");
         }
-        this.exercises.add(exercise);
+
+        return Mono.fromRunnable(() -> this.exercises.add(exercise));
     }
 }

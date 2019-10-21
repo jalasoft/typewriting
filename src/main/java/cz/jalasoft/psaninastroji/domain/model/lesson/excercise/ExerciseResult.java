@@ -11,14 +11,15 @@ import java.util.List;
 public final class ExerciseResult {
 
     private final Lesson lesson;
-    private final List<Input> inputs;
+    private final List<KeyInput> inputs;
 
-    public ExerciseResult(Lesson lesson, List<Input> inputs) {
+    public ExerciseResult(Lesson lesson, List<KeyInput> inputs) {
         this.lesson = lesson;
         this.inputs = inputs;
     }
 
     public long typosCount() {
-        return inputs.stream().filter(Input::isTypo).count();
+        //return inputs.stream().filter(KeyInput::isTypo).count();
+        return 0;
     }
 }

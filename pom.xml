@@ -33,6 +33,19 @@
             <version>2.1.1.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-spi</artifactId>
+            <version>1.0.0.M7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-h2</artifactId>
+            <version>1.0.0.M7</version>
+        </dependency>
+
+
         <!--<dependency>
             <groupId>org.projectreactor</groupId>
             <artifactId>reactor-spring</artifactId>
@@ -61,8 +74,45 @@
 
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+    </repository>
+   <!--
+        <repository>
+       <id>spring-snapshots</id>
+       <name>Spring Snapshots</name>
+       <url>https://repo.spring.io/snapshot</url>
+       <snapshots>
+           <enabled>true</enabled>
+        </snapshots>
+        </repository>-->
+    </repositories>
+
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>6.0.7</version>
+                <configuration>
+                    <url>jdbc:h2:file:~/psaninastroji</url>
+                    <user>sa</user>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.197</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

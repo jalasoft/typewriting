@@ -1,8 +1,7 @@
 package cz.jalasoft.psaninastroji.domain.model.lesson.excercise;
 
-import cz.jalasoft.psaninastroji.domain.model.lesson.Lesson;
+import cz.jalasoft.psaninastroji.domain.model.lesson.LessonNumber;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,20 +12,26 @@ import java.util.List;
 public final class Exercise {
 
     private final ExerciseId id;
-    private final Lesson lesson;
-    private final List<Input> inputs;
+    private final LessonNumber lessonNumber;
+    private final List<KeyInput> inputs;
 
-    private int index;
-
-    public Exercise(ExerciseId id, Lesson lesson) {
+    public Exercise(ExerciseId id, LessonNumber lessonNumber, List<KeyInput> inputs) {
         this.id = id;
-        this.lesson = lesson;
-        this.inputs = new ArrayList<>();
-        this.index = 0;
+        this.lessonNumber = lessonNumber;
+        this.inputs = inputs;
+    }
+
+    public Exercise(ExerciseId id, LessonNumber lessonNumber) {
+        this(id, lessonNumber, new ArrayList<>());
+    }
+
+    public ExerciseId id() {
+        return id;
     }
 
     public void acceptKey(char key) {
 
+    	/*
         if (isFinished()) {
             throw new IllegalStateException("Exercise is finished.");
         }
@@ -38,11 +43,24 @@ public final class Exercise {
 
         if (!isTypo) {
             index++;
-        }
+        }*/
 
-        this.inputs.add(new Input(currentChar, isTypo));
+        this.inputs.add(new KeyInput(key));
     }
 
+    public LessonNumber lessonNumber() {
+    	return lessonNumber;
+	}
+
+	public String input() {
+        return inputs.stream().reduce(new StringBuilder(), (sb, ki) -> sb.append(ki.key()), StringBuilder::append).toString();
+    }
+
+	//public ExerciseResult validate(Lesson lesson) {
+    //    return null;
+    //}
+
+    /*
     public ExerciseResult result() {
         if (!isFinished()) {
             throw new IllegalStateException("Exercise is not yet finished.");
@@ -53,5 +71,5 @@ public final class Exercise {
 
     public boolean isFinished() {
         return index == lesson.pattern().length();
-    }
+    }*/
 }
