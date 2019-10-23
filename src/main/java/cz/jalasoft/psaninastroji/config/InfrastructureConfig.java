@@ -27,6 +27,7 @@ public class InfrastructureConfig {
         return new XmlLessonRepository(dataSupplier);
     }
 
+    /*
     @Bean
     public ConnectionFactory connectionFactory() {
 
@@ -42,5 +43,5 @@ public class InfrastructureConfig {
     @Bean
     public ExerciseRepository exerciseRepository() {
         return new InMemoryExerciseRepository();
-    }
+    }*/
 }

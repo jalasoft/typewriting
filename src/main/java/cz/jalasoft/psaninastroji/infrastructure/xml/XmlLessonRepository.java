@@ -41,8 +41,8 @@ public final class XmlLessonRepository implements LessonRepository {
     }
 
     @Override
-    public Mono<Lesson> byNumber(int number) {
-        if (number < 0) {
+    public Mono<Lesson> byNumber(LessonNumber number) {
+        if (number.value() < 0) {
             throw new IllegalArgumentException("Excercise number must not be negative.");
         }
 
@@ -156,11 +156,12 @@ public final class XmlLessonRepository implements LessonRepository {
         }
 
         private void buildLesson() {
+            LessonNumber number = new LessonNumber(lessonNumber);
             Instructions instructions = new Instructions(this.instructions);
             Pattern pattern = new Pattern(this.text);
             ValidationRule validationRule = builder.get();
 
-            Lesson lesson = new Lesson(lessonNumber, instructions, pattern, validationRule);
+            Lesson lesson = new Lesson(number, instructions, pattern, validationRule);
 
             sink.next(lesson);
         }

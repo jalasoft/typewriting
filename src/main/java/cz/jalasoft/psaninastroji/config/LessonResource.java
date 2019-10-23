@@ -20,7 +20,7 @@ public class LessonResource {
     }
 
     public LessonResource(Lesson lesson) {
-        this(lesson.number(), lesson.instructions().text(), lesson.pattern().value());
+        this(lesson.number().value(), lesson.instructions().text(), lesson.pattern().value());
     }
 
     @JsonProperty(value = "number")

@@ -47,6 +47,8 @@ public class EndpointFunctionsConfig {
         return resources("/static/**", new ClassPathResource("/static/"));
     }
 
+
+    /*
     @Bean
     public RouterFunction<ServerResponse> newExerciseByLessonNumber() {
         return route(POST("/lesson/{number}"), request -> {
@@ -54,7 +56,7 @@ public class EndpointFunctionsConfig {
             Mono<ExerciseId> exerciseMono = applicationService.newExercise(lessonNumber);
             return ServerResponse.ok().body(exerciseMono.map(ExerciseId::value), String.class);
         });
-    }
+    }*/
 
     @Bean
     public RouterFunction<ServerResponse> getLessonByNumber() {

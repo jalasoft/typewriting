@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
  */
 public interface LessonRepository {
 
-    Mono<Lesson> byNumber(int number);
+    Mono<Lesson> byNumber(LessonNumber number);
 }
