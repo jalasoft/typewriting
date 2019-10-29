@@ -17,8 +17,10 @@ module typewriting.classic {
     requires java.sql;
 
     opens cz.jalasoft.typewriting to spring.core;
+	opens cz.jalasoft.typewriting.config to spring.core;
 
     exports cz.jalasoft.typewriting;
+    exports cz.jalasoft.typewriting.config;
     exports cz.jalasoft.typewriting.web;
 
 }

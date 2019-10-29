@@ -6,6 +6,7 @@ import cz.jalasoft.domain.model.lesson.LessonNumber;
 import cz.jalasoft.domain.model.lesson.Pattern;
 import cz.jalasoft.domain.model.lesson.TyposBasedProgressRule;
 import cz.jalasoft.typewriting.domain.model.lesson.LessonRepository;
+import org.springframework.stereotype.Component;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

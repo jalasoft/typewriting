@@ -6,19 +6,25 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="/static/css/styles.css">
+    <link type="text/css" rel="stylesheet" href="/css/styles.css">
+
+	<script src="/js/lesson.js"></script>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-auto">
-                <div><u>Cvičenícko ${lesson_number}</u></div>
+                <div><u>Cvičení ${lesson_number}</u></div>
                 <div>-----------------------------------------------------------------------------------------------------------------------------</div>
-                <div>Opište bez mezer na jednu řádku</div>
+                <div>${lesson_instructions}</div>
                 <div>-----------------------------------------------------------------------------------------------------------------------------</div>
-                <div>k a l a d a s l a d k a j d a l k s a l a j a d a s a s a k s a j</div>
+                <div>${lesson_pattern}</div>
                 <div>-----------------------------------------------------------------------------------------------------------------------------</div>
-
+				<form>
+					<div class="form-group">
+						<textarea id="text_input" class="form-control" rows="2"></textarea>
+					</div>
+				</form>
             </div>
         </div>
     </div>
