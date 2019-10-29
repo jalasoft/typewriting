@@ -12,7 +12,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-auto">
-                <div><u>Cvičení 1.</u></div>
+                <div><u>Cvičenícko ${lesson_number}</u></div>
                 <div>-----------------------------------------------------------------------------------------------------------------------------</div>
                 <div>Opište bez mezer na jednu řádku</div>
                 <div>-----------------------------------------------------------------------------------------------------------------------------</div>
