@@ -22,6 +22,7 @@
                 <div>-----------------------------------------------------------------------------------------------------------------------------</div>
 				<form>
 					<div class="form-group">
+						<input id="pattern_input" type="hidden" name="pattern" value="${lesson_pattern}"/>
 						<textarea id="text_input" class="form-control" rows="2"></textarea>
 					</div>
 				</form>
