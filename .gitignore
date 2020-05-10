@@ -1,3 +1,9 @@
 .idea
 *.iml
 target
+node_modules
+dist
+node
+.tscache
+static
+*.log

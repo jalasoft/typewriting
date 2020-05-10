@@ -22,7 +22,7 @@
         </validation>
     </lesson>
     <lesson number="3">
-        <instructions>Opiště bez kontroli času. Mezerník tiskneme palcem.</instructions>
+        <instructions>Opiště bez kontroly času. Mezerník tiskneme palcem.</instructions>
         <text>da sad dal skla klas kasa salda sklad kajak klak saka lasa</text>
         <validation type="typos_driving">
             <typo equals="0" lesson="5"/>

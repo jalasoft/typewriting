@@ -1,4 +1,4 @@
-module typewriting.classic {
+module typewriting.lessons.server {
 
     requires typewriting.model;
 
@@ -12,7 +12,7 @@ module typewriting.classic {
     requires spring.webmvc;
     requires spring.boot.starter.web;
 
-
+    requires java.annotation;
     requires java.xml;
     requires java.sql;
 
