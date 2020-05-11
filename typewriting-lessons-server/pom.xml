@@ -52,10 +52,10 @@
 							<goal>install-node-and-npm</goal>
 						</goals>
 						<configuration>
-							<nodeVersion>v12.16.0</nodeVersion>
+							<nodeVersion>v12.16.3</nodeVersion>
 						</configuration>
 					</execution>
-					<!--<execution>
+					<execution>
 						<id>npm install</id>
 						<goals>
 							<goal>npm</goal>
@@ -65,16 +65,18 @@
 								install
 							</arguments>
 						</configuration>
-					</execution>-->
+					</execution>
 					<execution>
 						<id>grunt build</id>
 						<goals>
-							<goal>npm</goal>
+							<goal>grunt</goal>
 						</goals>
+
+						<!-- optional: the default phase is "generate-resources" -->
+						<!--<phase>generate-resources</phase>-->
+
 						<configuration>
-							<arguments>
-								run install
-							</arguments>
+							<arguments>deploy</arguments>
 						</configuration>
 					</execution>
 				</executions>

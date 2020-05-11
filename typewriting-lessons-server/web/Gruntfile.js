@@ -11,6 +11,12 @@ module.exports = function(grunt) {
                     src: 'src/index.html',
                     dest: 'dist/index.html'
                 }]
+            },
+            all: {
+                files: [{
+                    src: 'dist/index.html',
+                    dest: '../src/main/resource/static'
+                }]
             }
         },
         watch: {
@@ -26,4 +32,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy')
 
     grunt.registerTask('default', ['ts', 'copy:index'])
+    grunt.registerTask('deploy', ['ts', 'copy:index', 'copy:all'])
 }

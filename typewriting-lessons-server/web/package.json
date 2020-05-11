@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npx grunt && cp -r dist/* ../src/main/resources/static",
+    "grunti": "npx grunt && rm -rf ../src/main/resources/static && mkdir -p  ../src/main/resources/static && cp -r dist/* ../src/main/resources/static",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
