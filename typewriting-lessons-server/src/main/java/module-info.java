@@ -16,8 +16,11 @@ module typewriting.lessons.server {
     requires java.xml;
     requires java.sql;
 
+    requires com.fasterxml.jackson.databind;
+
     opens cz.jalasoft.typewriting to spring.core;
 	opens cz.jalasoft.typewriting.config to spring.core;
+    opens cz.jalasoft.typewriting.web to com.fasterxml.jackson.databind;
 
     exports cz.jalasoft.typewriting;
     exports cz.jalasoft.typewriting.config;

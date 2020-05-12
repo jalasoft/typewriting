@@ -1,8 +1,23 @@
 module.exports = function(grunt) {
+
+    const sass = require('node-sass');
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
         ts: {
             default: {
                 tsconfig: './tsconfig.json'
+            }
+        },
+        sass: {
+            options: {
+                implementation: sass,
+                sourceMap: true
+            },
+            dist : {
+                files: {
+                    'dist/css/styles.css': 'src/sass/*.scss'
+                }
             }
         },
         copy: {
@@ -22,7 +37,7 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: ['src/ts/**.ts', 'src/index.html'],
+            files: ['src/ts/**.ts', 'src/sass/*.scss', 'src/index.html'],
             tasks: [
                 "default"
             ]
@@ -32,7 +47,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ts')
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-copy')
-
-    grunt.registerTask('default', ['ts', 'copy:index'])
+    
+    grunt.registerTask('default', ['ts', 'sass', 'copy:index'])
     grunt.registerTask('deploy', ['ts', 'copy:index', 'copy:deploy'])
 }
