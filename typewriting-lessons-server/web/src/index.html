@@ -9,10 +9,16 @@
     <script defer src="/logic.js"></script>
 </head>
 <body>
-    <div class="content">
+    <div class="content" style="margin-top: 50px;">
         <div>
-            <div id="editor" tabindex="0" style="margin-top: 50px;">
-                
+            <form>
+                <div class="stay-on-line">---------------------------------------------------------------------------------------------------------------</div>
+                <label for="lesson">lekce:</label>
+                <input id="lesson" style="width: 50px; font-size: 1em; border:none" value="1" type="number" min="1" max="5"/>
+                <div class="stay-on-line">---------------------------------------------------------------------------------------------------------------</div>
+                <button type="button">Start</button>
+            </form>
+            <div id="editor" tabindex="0">
             </div>
         </div>
     </div>
