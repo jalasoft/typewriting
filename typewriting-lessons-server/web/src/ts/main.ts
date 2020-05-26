@@ -1,8 +1,8 @@
-import { TypeWriter, LessonLoader, Lesson } from "./typewriter"
+import { TypeWriterComponent } from "./typewriter"
+import { LocalLessonLoader } from "./lesson_loader"
 
-const loader : LessonLoader = (n : number) => new Promise<Lesson>((resolve, reject) => resolve({ text: "da sad dal skla klas kasa salda sklad kajak klak saka lasa"}));
-const writer = TypeWriter.bind('#editor', loader);
-
-writer.lesson(1, stats => {
-    console.log(stats)
-})
+const writer = TypeWriterComponent.bind('#editor', LocalLessonLoader);
+writer.setLessonListener(s => {
+    console.log(s)
+});
+writer.lesson(1)
