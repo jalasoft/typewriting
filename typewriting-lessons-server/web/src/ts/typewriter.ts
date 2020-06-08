@@ -1,5 +1,5 @@
 
-import { TypeWriter, TypeWriterPaper, LessonLoader, Lesson, LessonStatistics, StrokeAction, LessonListener }  from "./model"
+import { TypeWriter, TypeWriterPaper, LessonLoader, Lesson, LessonStatistics, LessonListener }  from "./model"
 
 
 class TypeWriterComponent implements TypeWriter, TypeWriterPaper {
@@ -7,7 +7,7 @@ class TypeWriterComponent implements TypeWriter, TypeWriterPaper {
 static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
         const maybeElement : Element | null = document.querySelector(selector);
         if (this.isDiv(maybeElement)) {
-            const component = new TypeWriterComponent(maybeElement, lessonLoader);
+            const component = new TypeWriterComponent(maybeElement);
             component.setLessonLoader(lessonLoader)
             return component
         } else {
@@ -23,14 +23,15 @@ static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
     //INSTANCE SCOPE
     //------------------------------------------------------------------
 
+    private lessonLoader? : LessonLoader
     private actualLesson? : Lesson
     private listener? : LessonListener
 
+    private chars? : HTMLSpanElement[]
+
     private readonly handler : (e : KeyboardEvent) => void
     
-    constructor(
-        private readonly target : HTMLDivElement, 
-        private loader : LessonLoader) {
+    constructor(private readonly target : HTMLDivElement) {
 
         this.handler = this.onKeyDown.bind(this)
         this.listener = s => {}
@@ -45,12 +46,7 @@ static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
         }
 
         const lesson  = (this.actualLesson as Lesson)
-        const action : StrokeAction = lesson.type(char)
-        
-        if (action.done) {
-             this.target.removeEventListener("keypress", this.handler);
-             this.listener?(lesson.stats)
-        }
+        lesson.type(char, this)
     }
 
     setLessonListener(listener: LessonListener) {
@@ -58,7 +54,7 @@ static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
     }
 
     setLessonLoader(loader: LessonLoader) {
-        this.loader = loader
+        this.lessonLoader = loader
     }
 
     public lesson(n : number) {
@@ -67,7 +63,7 @@ static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
             throw new Error("Actual lesson not finished.")
         }
 
-        this.loader(n)
+        this.lessonLoader?.(n)
             .then(l => this.startLesson(l))
     }
 
@@ -75,13 +71,15 @@ static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
         
         this.target.addEventListener("keypress", this.handler)
         
+        this.chars = []
         this.actualLesson = lesson
         this.actualLesson.start(this)
     }
 
-    displayText(text : string) {
+    appendTemplateText(text : string) {
         const [ divs, spans ] = this.generateElements(text)
         divs.forEach(div => this.target.appendChild(div))
+        this.chars?.push(...spans)
     }
 
     private generateElements(text: string) : [HTMLDivElement[], HTMLSpanElement[]] {
@@ -115,6 +113,33 @@ static bind(selector : string, lessonLoader : LessonLoader) : TypeWriter {
             }    
         } 
         yield word
+    }
+
+    public clearPosition() {
+        this.chars?.forEach(ch => ch.classList.remove("cursor", "insert-match", "insert-mismatch"))
+    }
+
+    public markMatch(position : number) {
+        this.chars?.[position].classList.add("insert-match")
+    }
+
+    public markMismatch(position: number) {
+        this.chars?.[position].classList.add("insert-mismatch")
+    }
+
+    public markCursor(position : number) {
+        this.chars?.[position].classList.add("cursor")  
+    }
+
+    public clearCursor(position : number) {
+        this.chars?.[position].classList.remove("cursor")
+    }
+
+    public done(stats : LessonStatistics) {
+        this.listener?.(stats)
+        this.target.removeEventListener("keypress", this.handler)
+        this.actualLesson = undefined
+        this.chars = undefined
     }
 }
 

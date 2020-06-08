@@ -1,18 +1,24 @@
 interface TypeWriterPaper {
-    displayText : (text: string) => void
+    appendTemplateText : (text: string) => void
+
+    clearPosition : () => void
+
+    markMatch : (position : number) => void
+
+    markMismatch : (position : number) => void
+
+    markCursor : (position : number) => void
+
+    clearCursor : (position : number) => void
+
+    done : (stats : LessonStatistics) => void
 }
 
 interface Lesson {
     start : (paper : TypeWriterPaper) => void
-    type: (char : string) => StrokeAction
+    type: (char : string, paper : TypeWriterPaper) => void
     isDone: boolean
     stats : LessonStatistics
-}
-
-interface StrokeAction {
-    correct: boolean
-    moveNext: boolean
-    done: boolean
 }
 
 interface LessonStatistics {
@@ -33,4 +39,4 @@ interface TypeWriter {
     lesson: (n : number) => void
 }
 
-export { TypeWriterPaper, TypeWriter, Lesson, StrokeAction, LessonStatistics, LessonLoader, LessonListener }
+export { TypeWriterPaper, TypeWriter, Lesson, LessonStatistics, LessonLoader, LessonListener }

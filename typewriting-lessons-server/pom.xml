@@ -20,12 +20,19 @@
 			<version>${project.version}</version>
 		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>5.2.5.RELEASE</version>
+		</dependency>
 
+		<!--
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                    <version>${spring.boot.version}</version>
+                </dependency>
+        -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<!--<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -64,6 +71,7 @@
 				<executions>
 					<execution>
 						<id>install node and npm</id>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
@@ -83,22 +91,44 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>grunt build</id>
+						<id>webpack build</id>
 						<goals>
-							<goal>grunt</goal>
+							<goal>webpack</goal>
 						</goals>
 
 						<!-- optional: the default phase is "generate-resources" -->
 						<!--<phase>generate-resources</phase>-->
 
-						<configuration>
+						<!--<configuration>
 							<arguments>deploy</arguments>
-						</configuration>
+						</configuration>-->
 					</execution>
 				</executions>
 				<configuration>
 					<workingDirectory>web</workingDirectory>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-web</id>
+						<!-- here the phase you need -->
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/main/resources/static</outputDirectory>
+							<resources>
+								<resource>
+									<directory>web/dist</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>

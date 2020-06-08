@@ -1,11 +1,13 @@
 
-import { Lesson, StrokeAction, TypeWriterPaper, LessonStatistics } from "./model"
+import { Lesson, TypeWriterPaper, LessonStatistics } from "./model"
 
 class FixedTextLesson implements Lesson {
 
     private position : number
     private typos : number
     private timestamps : number[]
+
+    private paper? : TypeWriterPaper
 
     constructor(private readonly text : string) {
         this.position = 0
@@ -14,29 +16,31 @@ class FixedTextLesson implements Lesson {
     }
 
     start(paper : TypeWriterPaper) {
-
+        paper.appendTemplateText(this.text)
+        paper.markCursor(this.position)
     }
 
-    type(char : string) : StrokeAction {
-        if (this.isDone) {
-            return { correct: true, moveNext: false, done: true }
+    type(char : string, paper : TypeWriterPaper) {
+        const expectedChar = this.text[this.position]
+        
+        if (expectedChar == char) {
+            paper.markMatch(this.position)
+        } else {
+            this.typos++
+            paper.markMismatch(this.position)
         }
 
-        const expectedChar = this.text[this.position]
+        paper.clearCursor(this.position)
         this.position++
 
-        const action : StrokeAction = {
-            correct: expectedChar == char,
-            moveNext: true,
-            done: this.isDone
-        }
-
-        if (!action.correct) {
-            this.typos++
+        if (this.isDone) {
+            paper.done(this.stats)
+            return
+        } else {
+            paper.markCursor(this.position)
         }
 
         this.timestamps.push(performance.now())
-        return action
     }
 
     get isDone() : boolean {
