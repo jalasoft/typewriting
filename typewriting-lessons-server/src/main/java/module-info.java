@@ -1,21 +1,16 @@
 module typewriting.lessons.server {
 
-    requires typewriting.model;
-
-	requires spring.boot.starter;
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
     requires spring.context;
-    requires spring.beans;
-    requires spring.core;
     requires spring.web;
     requires spring.webmvc;
-    requires spring.boot.starter.web;
+    requires spring.beans;
 
-    requires java.annotation;
+    requires javax.servlet.api;
+    requires org.eclipse.jetty.server;
+    requires org.eclipse.jetty.servlet;
+
     requires java.xml;
-    requires java.sql;
-
+    requires typewriting.model;
     requires com.fasterxml.jackson.databind;
 
     opens cz.jalasoft.typewriting to spring.core;

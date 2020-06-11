@@ -26,6 +26,11 @@ public class WebController {
 		this.lessonRepository = lessonRepository;
 	}
 
+	@GetMapping("/")
+	public String rootForwarding() {
+		return "forward:/index.html";
+	}
+
 	@GetMapping("/lesson.html")
 	public ModelAndView index(@RequestParam("lesson") int lessonNumber) {
 

@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+@Deprecated
 public final class XmlLessonRepository implements LessonRepository {
 
 	private final Supplier<InputStream> source;

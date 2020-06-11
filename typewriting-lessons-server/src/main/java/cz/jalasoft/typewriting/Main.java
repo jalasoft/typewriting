@@ -1,14 +1,21 @@
 package cz.jalasoft.typewriting;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 
-@SpringBootApplication
-public class Main {
+public final class Main {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
+	public static void main(String[] args) throws Exception {
+		var server = new Server(8999);
+
+		var ctx = new ServletContextHandler();
+		server.setHandler(ctx);
+
+		var initializer = new ServerApplicationInitializer();
+		initializer.onStartup(ctx.getServletContext());
+
+		server.start();
+		server.join();
 	}
-
-
 }
+

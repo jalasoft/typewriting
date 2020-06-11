@@ -13,6 +13,7 @@
         <module>typewriting-lessons-server</module>
         <module>typewriting-reactive</module>
         <module>typewriting-model</module>
+        <module>CzechConditionEvaluator</module>
     </modules>
 
 	<properties>

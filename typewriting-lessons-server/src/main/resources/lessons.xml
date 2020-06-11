@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <lessons>
-    <lesson number="1">
+    <lesson number="1" type="exact_match">
         <instructions>Opište bez mezer na jednu řádku</instructions>
         <text>k a l a d a s l a d k a j d a l k s a l a j a d a s a s a k s a j</text>
-        <validation type="typos_driving">
+        <progress>
+            <lesson number="1">$typo>=2</lesson>
             <typo equals="0" lesson="3"/>
             <typo equals="1" lesson="2"/>
             <typo equals="2" lesson="1"/>
             <typo greaterThan="2" lesson="1"/>
-        </validation>
+        </progress>
     </lesson>
     <lesson number="2">
         <instructions>Opište bez mezer na jednu řádku.</instructions>

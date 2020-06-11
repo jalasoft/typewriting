@@ -2,6 +2,8 @@ package cz.jalasoft.domain.model.lesson;
 
 public interface ProgressRule {
 
-    LessonNumber progress(LessonValidationResult result);
+    ProgressDescription description();
+
+    LessonNumber progress(int typosCount, boolean inTime);
 
 }
