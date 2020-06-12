@@ -4,9 +4,7 @@ import cz.jalasoft.domain.model.lesson.Instructions;
 import cz.jalasoft.domain.model.lesson.Lesson;
 import cz.jalasoft.domain.model.lesson.LessonNumber;
 import cz.jalasoft.domain.model.lesson.Pattern;
-import cz.jalasoft.domain.model.lesson.TyposBasedProgressRule;
 import cz.jalasoft.typewriting.domain.model.lesson.LessonRepository;
-import org.springframework.stereotype.Component;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -85,7 +83,7 @@ public final class XmlLessonRepository implements LessonRepository {
 		private boolean inText;
 		private Pattern pattern;
 		private boolean inValidation;
-		private TyposBasedProgressRule.Builder typosBasedRuleBuilder;
+		//private StandardProgressRule.Builder typosBasedRuleBuilder;
 
 		private final Collection<Lesson> lessons = new ArrayList<>();
 
@@ -111,7 +109,7 @@ public final class XmlLessonRepository implements LessonRepository {
 
 				case VALIDATION_ELEMENT:
 					inValidation = true;
-					typosBasedRuleBuilder = TyposBasedProgressRule.newRule();
+					//typosBasedRuleBuilder = StandardProgressRule.newRule();
 					break;
 
 				case TYPO_ELEMENT:
@@ -121,12 +119,12 @@ public final class XmlLessonRepository implements LessonRepository {
 
 					if (equals != null) {
 						int equalsNumber = Integer.parseInt(equals);
-						typosBasedRuleBuilder.typosEqualTo(equalsNumber, lesson);
+					//	typosBasedRuleBuilder.typosEqualTo(equalsNumber, lesson);
 					}
 
 					if (greaterThan != null) {
 						int greaterThanNumber = Integer.parseInt(greaterThan);
-						typosBasedRuleBuilder.typosGreaterThan(greaterThanNumber, lesson);
+					//	typosBasedRuleBuilder.typosGreaterThan(greaterThanNumber, lesson);
 					}
 			}
 		}
@@ -139,7 +137,7 @@ public final class XmlLessonRepository implements LessonRepository {
 					number = null;
 					instructions = null;
 					pattern = null;
-					typosBasedRuleBuilder = null;
+				//	typosBasedRuleBuilder = null;
 					break;
 
 				case INSTRUCTIONS_ELEMENT:
@@ -157,11 +155,11 @@ public final class XmlLessonRepository implements LessonRepository {
 		}
 
 		private Optional<Lesson> buildLesson() {
-			Lesson lesson = new Lesson(number, instructions, pattern, typosBasedRuleBuilder.get());
+			//Lesson lesson = new Lesson(number, instructions, pattern, typosBasedRuleBuilder.get());
 
-			if (lessonPredicate.test(lesson)) {
-				return Optional.of(lesson);
-			}
+		//	if (lessonPredicate.test(lesson)) {
+		//		return Optional.of(lesson);
+		//	}
 
 			return Optional.empty();
 		}

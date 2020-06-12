@@ -9,9 +9,9 @@ public final class Lesson {
     private final LessonNumber number;
     private final Instructions instructions;
     private final Pattern pattern;
-    private final ProgressRule validationRule;
+    private final LessonProgress validationRule;
 
-    public Lesson(LessonNumber number, Instructions instructions, Pattern pattern, ProgressRule validationRule) {
+    public Lesson(LessonNumber number, Instructions instructions, Pattern pattern, LessonProgress validationRule) {
         this.number = number;
         this.instructions = instructions;
         this.pattern = pattern;
@@ -30,13 +30,7 @@ public final class Lesson {
         return pattern;
     }
 
-    public ProgressRule validationRule() {
+    public LessonProgress progress() {
         return validationRule;
     }
-
-
-    /*
-    public Exercise newExercise(ExerciseId id) {
-        return new Exercise(id, this);
-    }*/
 }

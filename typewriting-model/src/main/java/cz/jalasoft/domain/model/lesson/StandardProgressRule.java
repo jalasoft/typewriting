@@ -1,16 +1,21 @@
 package cz.jalasoft.domain.model.lesson;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
-
 /**
  * @author Jan Lastovicka
  * @since 11/10/2019
  */
-public final class TyposBasedProgressRule implements ProgressRule {
+public final class StandardProgressRule implements LessonProgress {
 
+    @Override
+    public LessonNumber progress(Lesson lesson, LessonResult result) {
+        return null;
+    }
+
+    public ProgressDescription description() {
+        return null;
+    }
+
+    /*
     public static Builder newRule() {
         return new Builder();
     }
@@ -21,7 +26,7 @@ public final class TyposBasedProgressRule implements ProgressRule {
 
     private final List<Function<LessonValidationResult, Optional<LessonNumber>>> router;
 
-    public TyposBasedProgressRule(List<Function<LessonValidationResult, Optional<LessonNumber>>> router) {
+    public StandardProgressRule(List<Function<LessonValidationResult, Optional<LessonNumber>>> router) {
         this.router = router;
     }
 
@@ -58,7 +63,7 @@ public final class TyposBasedProgressRule implements ProgressRule {
         }
 
         public ProgressRule get() {
-            return new TyposBasedProgressRule(router);
+            return new StandardProgressRule(router);
         }
-    }
+    }*/
 }

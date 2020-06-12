@@ -5,8 +5,8 @@ import cz.jalasoft.domain.model.lesson.Lesson;
 import cz.jalasoft.domain.model.lesson.LessonNumber;
 import cz.jalasoft.typewriting.reactive.domain.model.lesson.LessonRepository;
 import cz.jalasoft.domain.model.lesson.Pattern;
-import cz.jalasoft.domain.model.lesson.ProgressRule;
-import cz.jalasoft.domain.model.lesson.TyposBasedProgressRule;
+import cz.jalasoft.domain.model.lesson.LessonProgress;
+import cz.jalasoft.domain.model.lesson.StandardProgressRule;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -78,7 +78,7 @@ public final class XmlLessonRepository implements LessonRepository {
         private boolean textElement;
         private String text;
 
-        private TyposBasedProgressRule.Builder builder;
+        private StandardProgressRule.Builder builder;
 
         public LessonsHandler(FluxSink<Lesson> sink) {
             this.sink = sink;
@@ -104,7 +104,7 @@ public final class XmlLessonRepository implements LessonRepository {
 
                     switch (type) {
                         case "typos_driving":
-                            builder = TyposBasedProgressRule.newRule();
+                            builder = StandardProgressRule.newRule();
                             break;
 
                         default:
@@ -159,7 +159,7 @@ public final class XmlLessonRepository implements LessonRepository {
             LessonNumber number = new LessonNumber(lessonNumber);
             Instructions instructions = new Instructions(this.instructions);
             Pattern pattern = new Pattern(this.text);
-            ProgressRule validationRule = builder.get();
+            LessonProgress validationRule = builder.get();
 
             Lesson lesson = new Lesson(number, instructions, pattern, validationRule);
 

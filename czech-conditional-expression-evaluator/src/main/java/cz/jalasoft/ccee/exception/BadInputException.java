@@ -1,6 +1,6 @@
-package cz.jalasoft.ccee.lexan;
+package cz.jalasoft.ccee.exception;
 
-public final class BadInputException extends Exception {
+public final class BadInputException extends EvaluationException {
 
     private final char symbol;
 

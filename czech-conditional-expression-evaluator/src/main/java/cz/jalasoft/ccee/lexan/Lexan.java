@@ -1,5 +1,7 @@
 package cz.jalasoft.ccee.lexan;
 
+import cz.jalasoft.ccee.exception.BadInputException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
