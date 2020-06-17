@@ -1,4 +1,4 @@
-package cz.jalasoft.ccee.lexan;
+package cz.jalasoft.ccee.input;
 
 import java.util.Optional;
 

@@ -1,6 +1,7 @@
 package cz.jalasoft.ccee.lexan;
 
-import cz.jalasoft.ccee.exception.BadInputException;
+import cz.jalasoft.ccee.exception.LexanException;
+import cz.jalasoft.ccee.input.InputSystem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,17 +11,30 @@ import static cz.jalasoft.ccee.lexan.LexicalSymbol.Type.*;
 
 public final class Lexan {
 
+    private static final char DELIMITER = ' ';
     private static final String CHARS = "aábcčdďeěéfghiíjklmnňoópqrřsštťuúůvwxyýzž";
     private static final Map<String, LexicalSymbol> KEYWORDS = new HashMap<>();
 
     static {
-        KEYWORDS.put("je", new LexicalSymbol(JE, null));
-        KEYWORDS.put("rovno", new LexicalSymbol(ROVNO, null));
-        KEYWORDS.put("více", new LexicalSymbol(VICE, null));
-        KEYWORDS.put("méně", new LexicalSymbol(MENE, null));
-        KEYWORDS.put("nebo", new LexicalSymbol(NEBO, null));
-        KEYWORDS.put("a", new LexicalSymbol(A, null));
+        KEYWORDS.put("je", new LexicalSymbol(JE, "je"));
+        KEYWORDS.put("není", new LexicalSymbol(NENI, "není"));
+        KEYWORDS.put("jak", new LexicalSymbol(JAK, "jak"));
+        KEYWORDS.put("než", new LexicalSymbol(NEZ, "než"));
+        KEYWORDS.put("rovno", new LexicalSymbol(ROVNO, "rovno"));
+        KEYWORDS.put("stejný", new LexicalSymbol(STEJNY, "stejný"));
+        KEYWORDS.put("stejně", new LexicalSymbol(STEJNE, "stejně"));
+        KEYWORDS.put("jako", new LexicalSymbol(JAKO, "jako"));
+        KEYWORDS.put("větší", new LexicalSymbol(VETSI, "větší"));
+        KEYWORDS.put("více", new LexicalSymbol(VICE, "více"));
+        KEYWORDS.put("víc", new LexicalSymbol(VIC, "víc"));
+        KEYWORDS.put("menší", new LexicalSymbol(MENSI, "menší"));
+        KEYWORDS.put("méně", new LexicalSymbol(MENE, "menší"));
+        KEYWORDS.put("míň", new LexicalSymbol(MIN, "menší"));
+        KEYWORDS.put("nebo", new LexicalSymbol(NEBO, "nebo"));
+        KEYWORDS.put("a", new LexicalSymbol(A, "a"));
     }
+
+    private static final LexicalSymbol EPSILON = new LexicalSymbol(LexicalSymbol.Type.EPSILON, null);
 
     //---------------------------------------------------------------------------
     //INSTANCE SCOPE
@@ -33,12 +47,17 @@ public final class Lexan {
         this.input = input;
     }
 
-    public Optional<LexicalSymbol> next() throws BadInputException {
+    public LexicalSymbol next() throws LexanException {
         this.buffer = new StringBuilder();
 
-        var maybeSymbol = input.nextSymbol();
+        Optional<Character> maybeSymbol;
+
+        do {
+            maybeSymbol = input.nextSymbol();
+        } while(maybeSymbol.isPresent() && maybeSymbol.get() == DELIMITER);
+
         if (maybeSymbol.isEmpty()) {
-            return Optional.empty();
+            return EPSILON;
         }
 
         char symbol = maybeSymbol.get();
@@ -52,14 +71,14 @@ public final class Lexan {
             return numberState();
         }
 
-        throw new BadInputException(symbol);
+        throw new LexanException(symbol);
     }
 
-    private Optional<LexicalSymbol> stringState() throws BadInputException {
+    private LexicalSymbol stringState() throws LexanException {
         var maybeSymbol = input.nextSymbol();
 
-        if (maybeSymbol.isEmpty()) {
-            return Optional.of(identifierOrKeyword());
+        if (maybeSymbol.isEmpty() || maybeSymbol.get() == DELIMITER) {
+            return identifierOrKeyword();
         }
 
         char symbol = maybeSymbol.get();
@@ -69,7 +88,7 @@ public final class Lexan {
             return stringState();
         }
 
-        throw new BadInputException(symbol);
+        throw new LexanException(symbol);
     }
 
     private LexicalSymbol identifierOrKeyword() {
@@ -77,11 +96,11 @@ public final class Lexan {
         return KEYWORDS.getOrDefault(ident, new LexicalSymbol(IDENT, ident));
     }
 
-    private Optional<LexicalSymbol> numberState() throws BadInputException {
+    private LexicalSymbol numberState() throws LexanException {
         var maybeSymbol = input.nextSymbol();
 
-        if (maybeSymbol.isEmpty()) {
-            return Optional.of(number());
+        if (maybeSymbol.isEmpty() || maybeSymbol.get() == DELIMITER) {
+            return number();
         }
 
         char symbol = maybeSymbol.get();
@@ -91,7 +110,7 @@ public final class Lexan {
             return numberState();
         }
 
-        throw new BadInputException(symbol);
+        throw new LexanException(symbol);
     }
 
     private LexicalSymbol number() {
@@ -103,6 +122,6 @@ public final class Lexan {
     }
 
     private boolean isDigit(char symbol) {
-        return Character.isDigit(symbol);
+        return Character.isDigit(symbol) || symbol == '-';
     }
 }

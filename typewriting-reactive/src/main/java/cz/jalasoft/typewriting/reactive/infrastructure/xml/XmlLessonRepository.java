@@ -5,8 +5,6 @@ import cz.jalasoft.domain.model.lesson.Lesson;
 import cz.jalasoft.domain.model.lesson.LessonNumber;
 import cz.jalasoft.typewriting.reactive.domain.model.lesson.LessonRepository;
 import cz.jalasoft.domain.model.lesson.Pattern;
-import cz.jalasoft.domain.model.lesson.LessonProgress;
-import cz.jalasoft.domain.model.lesson.StandardProgressRule;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -78,7 +76,7 @@ public final class XmlLessonRepository implements LessonRepository {
         private boolean textElement;
         private String text;
 
-        private StandardProgressRule.Builder builder;
+       // private StandardProgressRule.Builder builder;
 
         public LessonsHandler(FluxSink<Lesson> sink) {
             this.sink = sink;
@@ -104,7 +102,7 @@ public final class XmlLessonRepository implements LessonRepository {
 
                     switch (type) {
                         case "typos_driving":
-                            builder = StandardProgressRule.newRule();
+                          //  builder = StandardProgressRule.newRule();
                             break;
 
                         default:
@@ -113,9 +111,9 @@ public final class XmlLessonRepository implements LessonRepository {
                     break;
 
                 case TYPO_ELEMENT:
-                    if (builder == null) {
-                        throw new IllegalStateException();
-                    }
+                  //  if (builder == null) {
+                    //    throw new IllegalStateException();
+                   // }
 
                     int lesson = Integer.parseInt(attributes.getValue("lesson"));
                     LessonNumber lessonNumber = new LessonNumber(lesson);
@@ -123,7 +121,7 @@ public final class XmlLessonRepository implements LessonRepository {
                     String equalsStr = attributes.getValue("equals");
                     if (equalsStr != null) {
                         int equals = Integer.parseInt(equalsStr);
-                        builder.typosEqualTo(equals, lessonNumber);
+                     //   builder.typosEqualTo(equals, lessonNumber);
                     }
             }
         }
@@ -145,7 +143,7 @@ public final class XmlLessonRepository implements LessonRepository {
                 case LESSON_ELEMENT:
                     buildLesson();
                     lessonNumber = null;
-                    builder = null;
+             //       builder = null;
 
                 case INSTRUCTIONS_ELEMENT:
                     instructionsElement = false;
@@ -159,9 +157,9 @@ public final class XmlLessonRepository implements LessonRepository {
             LessonNumber number = new LessonNumber(lessonNumber);
             Instructions instructions = new Instructions(this.instructions);
             Pattern pattern = new Pattern(this.text);
-            LessonProgress validationRule = builder.get();
+         //   LessonProgress validationRule = builder.get();
 
-            Lesson lesson = new Lesson(number, instructions, pattern, validationRule);
+            Lesson lesson = new Lesson(number, instructions, pattern, null);
 
             sink.next(lesson);
         }

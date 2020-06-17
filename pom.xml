@@ -11,9 +11,9 @@
 
 	<modules>
         <module>typewriting-lessons-server</module>
-        <module>typewriting-reactive</module>
+        <!--<module>typewriting-reactive</module>-->
         <module>typewriting-model</module>
-        <module>CzechConditionEvaluator</module>
+        <module>czech-conditional-expression-evaluator</module>
     </modules>
 
 	<properties>
