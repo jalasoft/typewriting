@@ -1,6 +1,6 @@
 package cz.jalasoft.ccee.parser;
 
-import cz.jalasoft.ccee.exception.EvaluationException;
+import cz.jalasoft.ccee.exception.ExpressionException;
 import cz.jalasoft.ccee.exception.LexanException;
 import cz.jalasoft.ccee.exception.ParserException;
 import cz.jalasoft.ccee.input.StringInputSystem;
@@ -86,7 +86,7 @@ public final class Parser {
 
     private LexicalSymbol nextSymbol;
 
-    public void parse(String input, ExpressionListener listener) throws EvaluationException {
+    public void parse(String input, ExpressionListener listener) throws ExpressionException {
         this.lexan = new Lexan(new StringInputSystem(input));
         this.listener = listener;
         this.nextSymbol = this.lexan.next();
@@ -119,7 +119,7 @@ public final class Parser {
        }
     }
 
-    private void start() throws EvaluationException {
+    private void start() throws ExpressionException {
         switch (nextSymbol.type()) {
             case IDENT, JE, NENI -> {
                 cond();
@@ -131,7 +131,7 @@ public final class Parser {
 
     }
 
-    private void cond() throws EvaluationException {
+    private void cond() throws ExpressionException {
         switch (nextSymbol.type()) {
             case IDENT -> {
                 binary_cond();
@@ -145,19 +145,19 @@ public final class Parser {
         }
     }
 
-    private void unary_cond() throws EvaluationException {
+    private void unary_cond() throws ExpressionException {
         switch (nextSymbol.type()) {
             case JE -> {
                 readNext();
                 var ident = identValue();
-                listener.unaryExpression(ident, IDENTITY);
+                listener.exp(ident, IDENTITY);
                 readNext();
             }
 
             case NENI -> {
                 readNext();
                 var ident = identValue();
-                listener.unaryExpression(ident, NEGATION);
+                listener.exp(ident, NEGATION);
                 readNext();
             }
 
@@ -165,7 +165,7 @@ public final class Parser {
         }
     }
 
-    private void binary_cond() throws EvaluationException {
+    private void binary_cond() throws ExpressionException {
            switch (nextSymbol.type()) {
                case IDENT -> {
                    var ident = identValue();
@@ -174,9 +174,9 @@ public final class Parser {
                    var symbol = roperand();
 
                    if (symbol.is(NUMBER)) {
-                        listener.binaryExpression(ident, operator, (int) symbol.value());
+                        listener.exp(ident, operator, (int) symbol.value());
                    } else if (symbol.is(IDENT)) {
-                       listener.binaryExpression(ident, operator, (String) symbol.value());
+                       listener.exp(ident, operator, (String) symbol.value());
                    } else {
                        throw new ParserException(symbol);
                    }
@@ -184,7 +184,7 @@ public final class Parser {
            }
     }
 
-    private ExpressionListener.BinaryOperator op() throws EvaluationException {
+    private ExpressionListener.BinaryOperator op() throws ExpressionException {
         return switch (nextSymbol.type()) {
             case JE -> {
                 readNext();
@@ -195,7 +195,7 @@ public final class Parser {
         };
     }
 
-    private LexicalSymbol roperand() throws EvaluationException {
+    private LexicalSymbol roperand() throws ExpressionException {
         switch (nextSymbol.type()) {
             case NUMBER, IDENT -> {
                 var symbol = nextSymbol;
@@ -207,7 +207,7 @@ public final class Parser {
         }
     }
 
-    private ExpressionListener.BinaryOperator op2() throws EvaluationException {
+    private ExpressionListener.BinaryOperator op2() throws ExpressionException {
         return switch (nextSymbol.type()) {
             case IDENT, NUMBER -> ExpressionListener.BinaryOperator.EQUAL;
 
@@ -238,7 +238,7 @@ public final class Parser {
         };
     }
 
-    private boolean op2_rest() throws EvaluationException {
+    private boolean op2_rest() throws ExpressionException {
         return switch (nextSymbol.type()) {
             case NEZ, JAK -> {
                 readNext();
@@ -255,7 +255,7 @@ public final class Parser {
         };
     }
 
-    private void or_equal() throws EvaluationException {
+    private void or_equal() throws ExpressionException {
         switch (nextSymbol.type()) {
             case ROVNO, STEJNE, STEJNY -> {
                 readNext();
@@ -266,7 +266,7 @@ public final class Parser {
         }
     }
 
-    private void op2_rest2() throws EvaluationException {
+    private void op2_rest2() throws ExpressionException {
         switch (nextSymbol.type()) {
             case NUMBER, IDENT -> {}
 
@@ -278,7 +278,7 @@ public final class Parser {
         }
     }
 
-    private void next() throws EvaluationException {
+    private void next() throws ExpressionException {
         switch (nextSymbol.type()) {
             case NEBO -> {
                 listener.or();

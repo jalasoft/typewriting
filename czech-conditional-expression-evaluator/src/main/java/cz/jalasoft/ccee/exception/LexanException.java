@@ -1,6 +1,6 @@
 package cz.jalasoft.ccee.exception;
 
-public final class LexanException extends EvaluationException {
+public final class LexanException extends ExpressionException {
 
     private final char symbol;
 

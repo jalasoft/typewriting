@@ -2,7 +2,7 @@ package cz.jalasoft.ccee.exception;
 
 import cz.jalasoft.ccee.lexan.LexicalSymbol;
 
-public final class ParserException extends EvaluationException {
+public final class ParserException extends ExpressionException {
 
     private final LexicalSymbol symbol;
 

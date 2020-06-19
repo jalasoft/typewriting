@@ -1,0 +1,26 @@
+package cz.jalasoft.ccee;
+
+/**
+ * Instance of this class supplies values of identifiers that are required
+ * by {@link BoolExpression}.
+ */
+public interface Context {
+
+    /**
+     * Gets an integer value of an identifier by its name
+     * @param identName must not be null or blank
+     * @return never null
+     * @throws IllegalArgumentException if identName is null or blank
+     * @throws cz.jalasoft.ccee.exception.IdentifierException if there is no identifier of given name or there is such identifier, but of distinct type
+     */
+    int number(String identName);
+
+    /**
+     * Gets a boolean value of an identifier by its name
+     * @param identName must not be null or blank
+     * @return never null
+     * @throws IllegalArgumentException if identName is null or blank
+     * @throws cz.jalasoft.ccee.exception.IdentifierException if there is no identifier of given name or there is such identifier, but of distinct type
+     */
+    boolean bool(String identName);
+}
