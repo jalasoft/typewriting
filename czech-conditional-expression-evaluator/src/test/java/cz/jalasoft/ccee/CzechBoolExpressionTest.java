@@ -45,7 +45,7 @@ public class CzechBoolExpressionTest {
     @ParameterizedTest()
     @MethodSource("expressions")
     public void inputExpressionsAreSuccessfullyParsed(String expression) throws ExpressionException {
-        var exp = this.expression.expression(expression);
+        var exp = this.expression.parse(expression);
 
         assertNotNull(exp);
     }
@@ -76,7 +76,7 @@ public class CzechBoolExpressionTest {
     public void expressionWithIdentifiersIsCorrectlyEvaluated(String expression, StandardMapContext.Builder ctxBuilder, boolean expectedResult) throws ExpressionException {
 
         var ctx = ctxBuilder.build();
-        var exp = this.expression.expression(expression);
+        var exp = this.expression.parse(expression);
         var actualResult = exp.evaluate(ctx);
 
         assertEquals(expectedResult, actualResult);

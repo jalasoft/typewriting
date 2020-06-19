@@ -37,7 +37,7 @@ public final class CzechBoolExpression {
      * @throws ExpressionException if input is not well formed
      * @throws IllegalArgumentException if input is null or blank
      */
-    public BoolExpression expression(String input) throws ExpressionException {
+    public BoolExpression parse(String input) throws ExpressionException {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Expression to evaluate must not be null or empty.");
         }
